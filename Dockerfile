@@ -10,7 +10,5 @@ COPY . /app/
 # Install any needed packages specified in requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
-RUN lsusb
-
 # Run app.py when the container launches
 CMD ["python", "CameraAI-1.4/app.py"]

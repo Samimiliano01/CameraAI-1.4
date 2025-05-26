@@ -1,53 +1,30 @@
 import cv2
+import depthai as dai
 
-print("starting camera manager")
+pipeline = dai.Pipeline()
 
+color_cam = pipeline.createColorCamera()
+color_cam.setBoardSocket(dai.CameraBoardSocket.CAM_A)  # New recommended socket
+color_cam.setResolution(dai.ColorCameraProperties.SensorResolution.THE_1080_P)
+color_cam.setInterleaved(False)
+color_cam.setColorOrder(dai.ColorCameraProperties.ColorOrder.BGR)
+color_cam.setFps(5)  # Reduce FPS to lower USB load
 
+xout = pipeline.createXLinkOut()
+xout.setStreamName("color")
+color_cam.preview.link(xout.input)
+color_cam.setPreviewSize(1920, 1080)
 
+with dai.Device(pipeline) as device:
+    queue = device.getOutputQueue(name="color", maxSize=4, blocking=False)
 
-def list_ports():
-    """
-    Test the ports and returns a tuple with the available ports and the ones that are working.
-    """
-    non_working_ports = []
-    dev_port = 0
-    working_ports = []
-    available_ports = []
-    while len(non_working_ports) < 6: # if there are more than 5 non working ports stop the testing.
-        camera = cv2.VideoCapture(dev_port)
-        if not camera.isOpened():
-            non_working_ports.append(dev_port)
-            print("Port %s is not working." %dev_port)
-        else:
-            is_reading, img = camera.read()
-            w = camera.get(3)
-            h = camera.get(4)
-            if is_reading:
-                print("Port %s is working and reads images (%s x %s)" %(dev_port,h,w))
-                working_ports.append(dev_port)
-            else:
-                print("Port %s for camera ( %s x %s) is present but does not reads." %(dev_port,h,w))
-                available_ports.append(dev_port)
-        dev_port +=1
-    return available_ports,working_ports,non_working_ports
+    while True:
+        frame = queue.tryGet()
+        if frame is not None:
+            color_frame = frame.getCvFrame()
+            cv2.imshow("Color Camera", color_frame)
 
+        if cv2.waitKey(1) == ord('q'):
+            break
 
-list_ports()
-
-cap = cv2.VideoCapture(2)
-if not cap.isOpened():
-    print("Cannot open camera")
-    exit()
-
-while True:
-    ret, frame = cap.read()
-    if not ret:
-        print("Cannot read camera")
-        exit()
-
-    cv2.imshow('frame', frame)
-    if cv2.waitKey(1) & 0xFF == ord('q'):
-        break
-
-cap.release()
 cv2.destroyAllWindows()
