@@ -1,0 +1,7 @@
+.vs/
+.env
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+__pycache__/
