@@ -1,18 +1,18 @@
 import requests
 import json
-from DetectionRecord import DetectionRecord
+from DTOs.DetectionRecordDto import DetectionRecordDto
 
-API_ENDPOINT = "lokaal ip adres | de port"
+API_ENDPOINT = "lokaal ip adres : de port"
 API_KEY = "XXXXXXXXXXXXXXXXX"
 
 
-def Post_Detection_Record(detection_record: DetectionRecord)->DetectionRecord:
+def post_detection_record(detection_record: DetectionRecordDto)->DetectionRecordDto:
     headers = {
         "Content-Type": "application/json",
         "Authorization": f"Bearer {API_KEY}"
     }
 
-    data = json.dumps(detection_record.to_dict())   # of detection_record.to_dict() als je die hebt
+    data = json.dumps(detection_record.to_dict())
 
     response = requests.post(url=API_ENDPOINT, data=data, headers=headers)
 

@@ -1,6 +1,6 @@
 import datetime
 
-class DetectionRecord:
+class DetectionRecordDto:
     def __init__(self, detected_types: tuple[str], coordinates: tuple[float, float], location: str, time: datetime.datetime) -> None:
         self.detected_types = detected_types
         self.coordinates = coordinates
