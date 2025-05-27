@@ -8,29 +8,28 @@ DATASET_DIR = os.path.join(HOME, "datasets")
 os.makedirs(DATASET_DIR, exist_ok=True)
 os.chdir(DATASET_DIR)
 
-# Initialiseer Roboflow
-rf = Roboflow(api_key="7KXiWHk8i3zQ2p1hLlBf")
+API_KEY = os.getenv("ROBOFLOW_API_KEY")
+rf = Roboflow(api_key=API_KEY)
 
 # Haal project op uit juiste workspace
 workspace = rf.workspace("vape-0gytc")
 project = workspace.project("solidwaste-detection")
 
-# Toon beschikbare versies voor debug
-print("📦 Beschikbare datasetversies:")
+# debug
+print("Beschikbare datasetversies:")
 for v in project.versions():
     print(f"- Versie {v.version} (ID: {v.id})")
 
-# Gebruik de nieuwste versie automatisch
 dataset_version = project.versions()[0]  # Nieuwste versie bovenaan
 dataset = dataset_version.download("yolov8")
 print(f"✅ Gedownloade versie {dataset_version.version} naar {dataset.location}")
 
-# Initialiseer YOLO model (je kunt ook 'yolov8s.pt' gebruiken)
+
 model = YOLO("yolov8n.pt")
 
 # Train het model
 results = model.train(
-    data=os.path.join(dataset.location, "data.yaml"),  # datasetconfig
+    data=os.path.join(dataset.location, "data.yaml"),
     epochs=50,
     imgsz=640,
     project="solidwaste_project",
@@ -38,7 +37,6 @@ results = model.train(
     exist_ok=True
 )
 
-# Evalueer het model
 val_results = model.val()
 
 # Exporteer naar ONNX-formaat
