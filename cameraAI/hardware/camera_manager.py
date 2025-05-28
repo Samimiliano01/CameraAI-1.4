@@ -1,5 +1,7 @@
 import cv2
 import depthai as dai
+from cameraAI.detection import detect
+from ultralytics import YOLO
 
 def main():
     print("starting camera")
@@ -26,6 +28,8 @@ def main():
             if frame is not None:
                 color_frame = frame.getCvFrame()
                 cv2.imshow("Color Camera", color_frame)
+                print(detect.detect_litter(color_frame, YOLO(
+                    "../../AImodel/datasets/solidwaste_project/yolov8n_v16_results/weights/best.pt"), 0.6))
 
             if cv2.waitKey(1) == ord('q'):
                 break

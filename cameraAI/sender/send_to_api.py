@@ -1,6 +1,6 @@
 import requests
 import json
-from DTOs.DetectionRecordDto import DetectionRecordDto
+from cameraAI.dto.DetectionRecordDto import DetectionRecordDto
 
 API_ENDPOINT = "lokaal ip adres : de port"
 API_KEY = "XXXXXXXXXXXXXXXXX"
