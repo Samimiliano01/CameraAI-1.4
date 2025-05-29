@@ -1,15 +1,15 @@
 import datetime
 
 class DetectionRecordDto:
-    def __init__(self, detected_types: tuple[str], coordinates: tuple[float, float], location: str, time: datetime.datetime) -> None:
-        self.detected_types = detected_types
+    def __init__(self, category: str, coordinates: tuple[float, float], location: str, time: datetime.datetime) -> None:
+        self.category = category
         self.coordinates = coordinates
         self.location = location
         self.time = time
 
     def to_dict(self):
         return {
-            "detected_types": self.detected_types,
+            "category": self.category,
             "coordinates": self.coordinates,
             "location": self.location,
             "time": self.time.isoformat()  # JSON-serialiseerbare tijd

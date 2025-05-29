@@ -9,13 +9,13 @@ def train_model():
     os.makedirs(DATASET_DIR, exist_ok=True)
     os.chdir(DATASET_DIR)
 
-    API_KEY = os.getenv("ROBOFLOW_API_KEY")
+    API_KEY = "26vlUmryDlOd4kkEk8Fi"
     if not API_KEY:
         raise ValueError("Zet je ROBOFLOW_API_KEY als omgevingsvariabele!")
 
     rf = Roboflow(api_key=API_KEY)
-    workspace = rf.workspace("vape-0gytc")
-    project = workspace.project("solidwaste-detection")
+    workspace = rf.workspace("test-mncux")
+    project = workspace.project("litter_dataset-2vtbq")
 
     print("Beschikbare datasetversies:")
     for v in project.versions():
