@@ -9,7 +9,7 @@ def train_model():
     os.makedirs(DATASET_DIR, exist_ok=True)
     os.chdir(DATASET_DIR)
 
-    API_KEY = "26vlUmryDlOd4kkEk8Fi"
+    API_KEY = os.getenv("ROBOFLOW_API_KEY")
     if not API_KEY:
         raise ValueError("Zet je ROBOFLOW_API_KEY als omgevingsvariabele!")
 

@@ -9,8 +9,8 @@ class DetectionRecordDto:
 
     def to_dict(self):
         return {
-            "category": self.category,
-            "coordinates": self.coordinates,
-            "location": self.location,
-            "time": self.time.isoformat()  # JSON-serialiseerbare tijd
+            "Category": self.category,
+            "Coordinates": self.coordinates,
+            "Location": self.location,
+            "Time": self.time.isoformat()  # JSON-serialiseerbare tijd
         }

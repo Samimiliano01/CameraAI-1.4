@@ -1,53 +1,59 @@
-import datetime
-
-import cv2
 import depthai as dai
 from cameraAI.hardware import gps_manager
-from cameraAI.detection import detect
-from ultralytics import YOLO
+from cameraAI.detection.detect import postprocess_blob_output  # You must create this
 from cameraAI.sender import send_to_api
 from cameraAI.dto import DetectionRecordDto
-
+from cameraAI.external_api import external_api
 
 def main():
     previous_coords = (0, 0)
+    blob_path = "AImodel/datasets/solidwaste_project/yolov8n_v1_results/weights/best.blob"
 
-    print("starting camera")
+    print("Starting OAK-D with blob model...")
 
+    # Create pipeline
     pipeline = dai.Pipeline()
 
-    color_cam = pipeline.createColorCamera()
-    color_cam.setBoardSocket(dai.CameraBoardSocket.CAM_A)  # New recommended socket
-    color_cam.setResolution(dai.ColorCameraProperties.SensorResolution.THE_1080_P)
-    color_cam.setInterleaved(False)
-    color_cam.setColorOrder(dai.ColorCameraProperties.ColorOrder.BGR)
-    color_cam.setFps(1)  # Reduce FPS to lower USB load
+    cam = pipeline.create(dai.node.ColorCamera)
+    cam.setBoardSocket(dai.CameraBoardSocket.CAM_A)
+    cam.setResolution(dai.ColorCameraProperties.SensorResolution.THE_1080_P)
+    cam.setPreviewSize(640, 640)  # match YOLO input
+    cam.setInterleaved(False)
+    cam.setColorOrder(dai.ColorCameraProperties.ColorOrder.BGR)
+    cam.setFps(30)
 
-    xout = pipeline.createXLinkOut()
-    xout.setStreamName("color")
-    color_cam.preview.link(xout.input)
-    color_cam.setPreviewSize(1280, 720)
+    nn = pipeline.create(dai.node.NeuralNetwork)
+    nn.setBlobPath(blob_path)
+    cam.preview.link(nn.input)
 
-    with dai.Device(pipeline) as device:
-        queue = device.getOutputQueue(name="color", maxSize=4, blocking=False)
-        model = YOLO("../AImodel/datasets/solidwaste_project/yolov8n_v1_results/weights/best.pt")
+    nn_out = pipeline.create(dai.node.XLinkOut)
+    nn_out.setStreamName("nn")
+    nn.out.link(nn_out.input)
 
+    with dai.Device(pipeline, usb2Mode=True) as device:
+        output_queue = device.getOutputQueue(name="nn", maxSize=4, blocking=False)
 
         while True:
-            frame = queue.tryGet()
-            if frame is not None:
-                color_frame = frame.getCvFrame()
-                cv2.imshow("Color Camera", color_frame)
-                detected = detect.detect_litter(color_frame, model, 0.7)
-                if len(detected) > 0:
-                    for cat in detected:
-                        coords = gps_manager.get_gps_coordinates()
-                        if gps_manager.get_distance_between(coords, previous_coords) < 2:
-                            break
-                        previous_coords = coords
-                        send_to_api.post_detection_record(DetectionRecordDto.DetectionRecordDto(cat, coords, "Home", gps_manager.get_local_time(coords)))
+            in_nn = output_queue.tryGet()
+            if in_nn is None:
+                continue
 
-            if cv2.waitKey(1) == ord('q'):
-                break
+            raw_output = in_nn.getFirstLayerFp16()
 
-    cv2.destroyAllWindows()
+            detections = postprocess_blob_output(raw_output, conf_threshold=0.6)
+            print(detections)
+            if len(detections) > 0:
+                for cat in detections:
+                    coords = gps_manager.get_gps_coordinates()
+                    if gps_manager.get_distance_between(coords, previous_coords) < 2:
+                        continue
+                    previous_coords = coords
+                    print("sending result!")
+                    send_to_api.post_detection_record(
+                        DetectionRecordDto.DetectionRecordDto(
+                            cat,
+                            coords,
+                            external_api.get_address_from_coordinates(coords[0], coords[1]),
+                            gps_manager.get_local_time(coords)
+                        )
+                    )

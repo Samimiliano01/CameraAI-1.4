@@ -1,28 +1,40 @@
-from ultralytics import YOLO
+import numpy as np
 
-# model = YOLO("AImodel/datasets/solidwaste_project/yolov8n_v16_results/weights/best.pt")
-def detect_litter(image, model, confidence:float = 0.6) -> list[str]:
+# 17 classes - make sure these are your actual class names exactly
+LABELS = [
+    "cans", "cardboard", "colored glass bottles", "face mask", "glass bottle",
+    "HDPE", "LDPE", "PET", "PVC", "paper bag", "paper cup",
+    "paperboard", "peel", "pile of leaves", "rags", "styrofoam", "tetra pak"
+]
+
+def postprocess_blob_output(raw_output, conf_threshold=0.6):
     """
-    Detecteert afval in een afbeelding en geeft een lijst met labels terug
-    van objecten met confidence die groter is dan de meegegeven drempel.
-
-    Parameters:
-    -----------
-    image : afbeelding
-        Input afbeelding voor detectie.
-    confidence : float, optioneel
-        Minimum confidence threshold voor detecties (default is 0.6).
-
-    Returns:
-    --------
-    list[str]
-        Lijst met gedetecteerde labels boven de confidence drempel.
+    Postprocesses raw output from the blob without sigmoid.
+    Assumes raw_output shape: (num_detections, 4 + num_classes)
     """
-    results = model(image)
-    detected_types = [
-        results[0].names[int(box.cls)]
-        for box in results[0].boxes
-        if float(box.conf) > confidence
-    ]
-    return detected_types
+    if isinstance(raw_output, list):
+        raw_output = np.array(raw_output)
 
+    num_classes = len(LABELS)
+    detections = raw_output.reshape(-1, 4 + num_classes)
+    print(len(detections))
+    results = []
+    for det in detections:
+        bbox = det[:4]  # bbox coords (x,y,w,h)
+        class_scores = det[4:]  # raw class scores
+
+        class_id = np.argmax(class_scores)
+        class_conf = class_scores[class_id]
+
+        if class_conf < conf_threshold:
+            continue
+        else:
+            pass
+            # print(class_scores)
+            # print(class_id)
+            # print(class_conf)
+        label = LABELS[class_id]
+        results.append(label)
+
+    print(len(results))
+    return results

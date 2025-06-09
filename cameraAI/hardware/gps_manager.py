@@ -5,17 +5,21 @@ from serial import Serial
 from pyubx2 import UBXReader, NMEA_PROTOCOL, UBX_PROTOCOL
 import timezonefinder
 
-def get_gps_coordinates() -> tuple[float, float] | None:
+def get_gps_coordinates() -> tuple[float, float]:
   with Serial('/dev/ttyACM0', 9600, timeout=3) as stream:
     ubr = UBXReader(stream, protfilter=NMEA_PROTOCOL | UBX_PROTOCOL)
     raw_data, parsed_data = ubr.read()
     if parsed_data is not None:
       payload = parsed_data.payload
+      print(payload)
+      print(len(payload))
+      if len(payload) < 6:
+        return 0, 0
       # if on the other side of UTC meridian or southern hemisphere multiply latitude/longitude by -1.
-      latitude = payload[2] if payload[3] is 'N' else payload[2] * -1
-      longitude = payload[4] if payload[5] is 'E' else payload[4] * -1
-      return latitude, longitude
-    return None
+      latitude = payload[2] if payload[3] == 'N' else payload[2] * -1
+      longitude = payload[4] if payload[5] == 'E' else payload[4] * -1
+      return float(latitude) / 100, float(longitude) / 100
+    return 0, 0
 
 def get_distance_between(coord1, coord2) -> float:
   earth_radius = 6371000
