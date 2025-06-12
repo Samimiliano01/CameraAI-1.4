@@ -1,59 +1,102 @@
-import depthai as dai
 from cameraAI.hardware import gps_manager
-from cameraAI.detection.detect import postprocess_blob_output  # You must create this
 from cameraAI.sender import send_to_api
-from cameraAI.dto import DetectionRecordDto
-from cameraAI.external_api import external_api
+from cameraAI.detection import config
+from cameraAI.detection import utils
+import cv2
+import depthai as dai
+from imutils.video import FPS
+import time
 
 def main():
-    previous_coords = (0, 0)
-    blob_path = "AImodel/datasets/solidwaste_project/yolov8n_v1_results/weights/best.blob"
+    # initialize a depthai camera pipeline
+    print("[INFO] initializing a depthai images pipeline...")
 
-    print("Starting OAK-D with blob model...")
 
-    # Create pipeline
-    pipeline = dai.Pipeline()
+    pipeline = utils.create_camera_pipeline(config_path=config.YOLOV8N_CONFIG,
+                                            model_path=config.YOLOV8N_MODEL)
 
-    cam = pipeline.create(dai.node.ColorCamera)
-    cam.setBoardSocket(dai.CameraBoardSocket.CAM_A)
-    cam.setResolution(dai.ColorCameraProperties.SensorResolution.THE_1080_P)
-    cam.setPreviewSize(640, 640)  # match YOLO input
-    cam.setInterleaved(False)
-    cam.setColorOrder(dai.ColorCameraProperties.ColorOrder.BGR)
-    cam.setFps(30)
+    output_video = config.OUTPUT_VIDEO_YOLOv8n
+    previous_coords = (0,0)
+    # set the video codec to use with video writer
+    fourcc = cv2.VideoWriter_fourcc(*'MJPG')
 
-    nn = pipeline.create(dai.node.NeuralNetwork)
-    nn.setBlobPath(blob_path)
-    cam.preview.link(nn.input)
+    out = cv2.VideoWriter(
+       output_video,
+       fourcc,
+       20.0,
+       config.CAMERA_PREV_DIM
+    )
 
-    nn_out = pipeline.create(dai.node.XLinkOut)
-    nn_out.setStreamName("nn")
-    nn.out.link(nn_out.input)
-
+    # pipeline defined, now the device is assigned and pipeline is started
     with dai.Device(pipeline, usb2Mode=True) as device:
-        output_queue = device.getOutputQueue(name="nn", maxSize=4, blocking=False)
+        # output queues will be used to get the rgb frames
+        # and nn data from the outputs defined above
+        qRgb = device.getOutputQueue(name="rgb", maxSize=4, blocking=False)
+        qDet = device.getOutputQueue(name="nn", maxSize=4, blocking=False)
+        # initialize variables like frame, start time for NN FPS
+        # also start the FPS module timer, define color pattern for FPS text
+        # frame = None
+        startTime = time.monotonic()
+        fps = FPS().start()
+        counter = 0
+        color2 = (255, 255, 255)
 
+        print("[INFO] starting inference with OAK camera...")
         while True:
-            in_nn = output_queue.tryGet()
-            if in_nn is None:
-                continue
+            # fetch the RGB frames and YOLO detections for the frame
+            inRgb = qRgb.get()
+            inDet = qDet.get()
+            if inRgb is not None:
+                pass
+                #used to show video
 
-            raw_output = in_nn.getFirstLayerFp16()
+                # convert inRgb output to a format OpenCV library can work
+                frame = inRgb.getCvFrame()
+                # annotate the frame with FPS information
+                cv2.putText(frame, "NN fps: {:.2f}".format(counter / (time.monotonic() - startTime)),
+                            (2, frame.shape[0] - 4), cv2.FONT_HERSHEY_TRIPLEX, 0.8, color2)
+                # update the FPS counter
+                fps.update()
+            if inDet is not None:
+                # if inDet is not none, fetch all the detections for a frame
+                detections = inDet.detections
 
-            detections = postprocess_blob_output(raw_output, conf_threshold=0.6)
-            print(detections)
-            if len(detections) > 0:
-                for cat in detections:
-                    coords = gps_manager.get_gps_coordinates()
-                    if gps_manager.get_distance_between(coords, previous_coords) < 2:
-                        continue
-                    previous_coords = coords
-                    print("sending result!")
-                    send_to_api.post_detection_record(
-                        DetectionRecordDto.DetectionRecordDto(
-                            cat,
-                            coords,
-                            external_api.get_address_from_coordinates(coords[0], coords[1]),
-                            gps_manager.get_local_time(coords)
-                        )
-                    )
+                coords = gps_manager.gps_data.get()
+
+                if len(detections) >= 0 and (
+                        previous_coords is None or coords is None or gps_manager.get_distance_between(coords, previous_coords) >= 2):
+                    for detection in detections:
+                        result = config.LABELS[detection.label]
+                        print("type: " + result)
+                        print("confidence: " + str(detection.confidence))
+                        if detection.confidence < config.CONFIDENCE:
+                            continue
+
+                        previous_coords = coords
+
+                        send_to_api.detection_queue.put((result, coords))
+                        time.sleep(5)
+
+                counter += 1
+
+
+            #This is used to show the video
+
+            if frame is not None:
+                # annotate frame with detection results
+                frame = utils.annotateFrame(frame, detections, "video")
+                # display the frame with gesture output on the screen
+                cv2.imshow("video", frame)
+            # write the annotated frame to the file
+            out.write(frame)
+            # break out of the while loop if `q` key is pressed
+            if cv2.waitKey(1) == ord('q'):
+                break
+
+    #stop the timer and display FPS information
+    fps.stop()
+    print("[INFO] elapsed time: {:.2f}".format(fps.elapsed()))
+    print("[INFO] approx. FPS: {:.2f}".format(fps.fps()))
+    # do a bit of cleanup
+    out.release()
+    cv2.destroyAllWindows()

@@ -4,27 +4,23 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="83d6202b-f86d-4efd-9e20-13f78db2f499" name="Changes" comment="trained a new model, added gps">
-      <change afterPath="$PROJECT_DIR$/.env" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/AImodel/create_blob.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/AImodel/datasets/solidwaste_project/yolov8n_v1_results/weights/best.blob" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/AImodel/datasets/solidwaste_project/yolov8n_v1_results/weights/img.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/AImodel/datasets/solidwaste_project/yolov8n_v1_results/weights/step2.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/AImodel/test.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cameraAI/external_api/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cameraAI/external_api/external_api.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/CameraAI-1.4.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/CameraAI-1.4.iml" afterDir="false" />
+    <list default="true" id="83d6202b-f86d-4efd-9e20-13f78db2f499" name="Changes" comment="put on camera">
+      <change afterPath="$PROJECT_DIR$/AImodel/datasets/solidwaste_project/yolov8n_v1_results/weights/best-simplified.onnx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AImodel/datasets/solidwaste_project/yolov8n_v1_results/weights/best.bin" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AImodel/datasets/solidwaste_project/yolov8n_v1_results/weights/best.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AImodel/datasets/solidwaste_project/yolov8n_v1_results/weights/best.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AImodel/datasets/solidwaste_project/yolov8n_v1_results/weights/best_openvino_2022.1_6shave.blob" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cameraAI/detection/config.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cameraAI/detection/image_detect.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cameraAI/detection/utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AImodel/datasets/solidwaste_project/yolov8n_v1_results/weights/best.onnx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AImodel/train_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/AImodel/train_model.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cameraAI/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/cameraAI/app.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cameraAI/detection/detect.py" beforeDir="false" afterPath="$PROJECT_DIR$/cameraAI/detection/detect.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cameraAI/dto/DetectionRecordDto.py" beforeDir="false" afterPath="$PROJECT_DIR$/cameraAI/dto/DetectionRecordDto.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cameraAI/hardware/camera_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/cameraAI/hardware/camera_manager.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cameraAI/hardware/gps_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/cameraAI/hardware/gps_manager.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cameraAI/sender/send_to_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/cameraAI/sender/send_to_api.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,33 +62,37 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Python.app.executor": "Run",
-    "Python.create_blob.executor": "Run",
-    "Python.more.executor": "Run",
-    "Python.step2.executor": "Run",
-    "Python.test (1).executor": "Run",
-    "Python.test.executor": "Run",
-    "Python.yolotest.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "camera-AI",
-    "node.js.detected.package.eslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python tests.Python tests in helper_test.py.executor&quot;: &quot;Run&quot;,
+    &quot;Python.app.executor&quot;: &quot;Run&quot;,
+    &quot;Python.camera_manager.executor&quot;: &quot;Run&quot;,
+    &quot;Python.create_blob.executor&quot;: &quot;Run&quot;,
+    &quot;Python.detect.executor&quot;: &quot;Run&quot;,
+    &quot;Python.gps_manager.executor&quot;: &quot;Run&quot;,
+    &quot;Python.more.executor&quot;: &quot;Run&quot;,
+    &quot;Python.step2.executor&quot;: &quot;Run&quot;,
+    &quot;Python.test (1).executor&quot;: &quot;Run&quot;,
+    &quot;Python.test.executor&quot;: &quot;Run&quot;,
+    &quot;Python.yolotest.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;camera-AI&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\lvgra\Documents\school\projecten\CameraAI-1.4\AImodel\datasets\solidwaste_project\yolov8n_v1_results\weights" />
       <recent name="C:\Users\lvgra\Documents\school\projecten\CameraAI-1.4\AImodel" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.test (1)">
-    <configuration name="create_blob" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Python.gps_manager">
+    <configuration name="camera_manager" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="CameraAI-1.4" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -101,12 +101,12 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/AImodel" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/cameraAI/hardware" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/AImodel/create_blob.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/cameraAI/hardware/camera_manager.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -115,7 +115,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="more" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="detect" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="CameraAI-1.4" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -124,12 +124,12 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/AImodel/datasets/solidwaste_project/yolov8n_v1_results/weights" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/cameraAI/detection" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/AImodel/datasets/solidwaste_project/yolov8n_v1_results/weights/more.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/cameraAI/detection/detect.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -138,7 +138,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="step2" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="gps_manager" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="CameraAI-1.4" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -147,12 +147,12 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/AImodel/datasets/solidwaste_project/yolov8n_v1_results/weights" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/cameraAI/hardware" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/AImodel/datasets/solidwaste_project/yolov8n_v1_results/weights/step2.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/cameraAI/hardware/gps_manager.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -161,7 +161,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="test (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="image_detect" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="CameraAI-1.4" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -170,12 +170,12 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/AImodel" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/cameraAI/detection" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/AImodel/test.py" />
+      <option name="SCRIPT_NAME" value="C:\Users\lvgra\Documents\school\projecten\CameraAI-1.4\cameraAI\detection\image_detect.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -184,36 +184,29 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="yolotest" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="Python tests in helper_test.py" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
       <module name="CameraAI-1.4" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/AImodel/datasets/solidwaste_project/yolov8n_v1_results/weights" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/.venv1/Lib/site-packages/onnx/test" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/AImodel/datasets/solidwaste_project/yolov8n_v1_results/weights/yolotest.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;$PROJECT_DIR$/.venv1/Lib/site-packages/onnx/test/helper_test.py&quot;" />
+      <option name="_new_targetType" value="&quot;PATH&quot;" />
       <method v="2" />
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.test (1)" />
-        <item itemvalue="Python.yolotest" />
-        <item itemvalue="Python.more" />
-        <item itemvalue="Python.step2" />
-        <item itemvalue="Python.create_blob" />
+        <item itemvalue="Python.gps_manager" />
+        <item itemvalue="Python tests.Python tests in helper_test.py" />
+        <item itemvalue="Python.camera_manager" />
+        <item itemvalue="Python.detect" />
+        <item itemvalue="Python.image_detect" />
       </list>
     </recent_temporary>
   </component>
@@ -240,24 +233,57 @@
       <workItem from="1748889774908" duration="4000" />
       <workItem from="1749200061141" duration="2925000" />
       <workItem from="1749387641240" duration="9601000" />
-      <workItem from="1749474249954" duration="22546000" />
+      <workItem from="1749474249954" duration="25705000" />
+      <workItem from="1749540099067" duration="23548000" />
+      <workItem from="1749597181247" duration="228000" />
+      <workItem from="1749628190027" duration="29702000" />
+      <workItem from="1749716663928" duration="1936000" />
+      <workItem from="1749723131627" duration="1822000" />
+      <workItem from="1749727069041" duration="4886000" />
     </task>
+    <task id="LOCAL-00001" summary="put on camera">
+      <option name="closed" value="true" />
+      <created>1749506739296</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1749506739296</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="put on camera" />
+    <option name="LAST_COMMIT_MESSAGE" value="put on camera" />
+  </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/CameraAI_1_4$create_blob.coverage" NAME="create_blob Coverage Results" MODIFIED="1749487392822" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/AImodel" />
+    <SUITE FILE_PATH="coverage/CameraAI_1_4$.coverage" NAME=" Coverage Results" MODIFIED="1749723883162" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/.venv1/Lib/site-packages/onnx/test" />
     <SUITE FILE_PATH="coverage/CameraAI_1_4$test.coverage" NAME="test Coverage Results" MODIFIED="1749486843989" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/AImodel/datasets/solidwaste_project/yolov8n_v1_results/weights" />
     <SUITE FILE_PATH="coverage/CameraAI_1_4$step2.coverage" NAME="step2 Coverage Results" MODIFIED="1749490150421" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/AImodel/datasets/solidwaste_project/yolov8n_v1_results/weights" />
     <SUITE FILE_PATH="coverage/CameraAI_1_4$test__1_.coverage" NAME="test (1) Coverage Results" MODIFIED="1749505338662" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/AImodel" />
     <SUITE FILE_PATH="coverage/CameraAI_1_4$app.coverage" NAME="app Coverage Results" MODIFIED="1748635494342" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/cameraAI" />
+    <SUITE FILE_PATH="coverage/CameraAI_1_4$gps_manager.coverage" NAME="gps_manager Coverage Results" MODIFIED="1749727182163" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/cameraAI/hardware" />
+    <SUITE FILE_PATH="coverage/CameraAI_1_4$detect.coverage" NAME="detect Coverage Results" MODIFIED="1749546122482" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/cameraAI/detection" />
     <SUITE FILE_PATH="coverage/CameraAI_1_4$train_model.coverage" NAME="train_model Coverage Results" MODIFIED="1748512972538" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/AImodel" />
     <SUITE FILE_PATH="coverage/CameraAI_1_4$check_voor_gpu.coverage" NAME="check voor gpu Coverage Results" MODIFIED="1748281418474" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/AImodel" />
     <SUITE FILE_PATH="coverage/CameraAI_1_4$CameraManager.coverage" NAME="CameraManager Coverage Results" MODIFIED="1748033448287" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/CameraAI-1.4" />
     <SUITE FILE_PATH="coverage/CameraAI_1_4$more.coverage" NAME="more Coverage Results" MODIFIED="1749490450757" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/AImodel/datasets/solidwaste_project/yolov8n_v1_results/weights" />
-    <SUITE FILE_PATH="coverage/CameraAI_1_4$camera_manager.coverage" NAME="camera_manager Coverage Results" MODIFIED="1748299316859" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/CameraAI-1.4" />
+    <SUITE FILE_PATH="coverage/CameraAI_1_4$camera_manager.coverage" NAME="camera_manager Coverage Results" MODIFIED="1749562930402" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/cameraAI/hardware" />
     <SUITE FILE_PATH="coverage/CameraAI_1_4$app__1_.coverage" NAME="app (1) Coverage Results" MODIFIED="1748520289984" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/cameraAI" />
     <SUITE FILE_PATH="coverage/CameraAI_1_4$yolotest.coverage" NAME="yolotest Coverage Results" MODIFIED="1749503856119" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/AImodel/datasets/solidwaste_project/yolov8n_v1_results/weights" />
   </component>

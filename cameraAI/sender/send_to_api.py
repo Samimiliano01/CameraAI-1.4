@@ -1,58 +1,51 @@
 import requests
 import os
-import json
-from threading import Timer
 from cameraAI.dto.DetectionRecordDto import DetectionRecordDto
 from dotenv import load_dotenv
-
-class LoginInfo:
-
-    def __init__(self, access_token: str="", expires_in: float=0, refresh_token: str=""):
-        self.access_token = access_token
-        self.expires_in = expires_in
-        self.refresh_token = refresh_token
-
-    def refresh(self):
-        Timer(self.expires_in, lambda: login(self))
-
+import queue
+from cameraAI.hardware import gps_manager
+from cameraAI.external_api import external_api
+import threading
 
 load_dotenv()
 API_ENDPOINT = os.getenv("API_URL")
-login_info: LoginInfo | None = None
+API_KEY = os.getenv("API_KEY")
+detection_queue = queue.Queue()
 
-def login(info: LoginInfo):
-    headers = {
-        "Content-Type": "application/json",
-    }
+def detection_worker():
+    while True:
+        data = detection_queue.get()
+        if data is None:
+            break  # Allows clean shutdown
 
-    data = {"email": os.getenv("API_USERNAME"), "password": os.getenv("API_PASSWORD")}
-
-    response = requests.post(API_ENDPOINT + "/account/login", headers=headers, data=data)
-
-    if response.status_code == 200:
-        json_response = response.json()
-        info.access_token = json_response["access_token"]
-        info.expires_in = json_response["expires_in"]
-        info.refresh_token = json_response["refresh_token"]
-        info.refresh()
-    else:
-        print("Error:", response.status_code, response.text)
-
+        result, coords = data
+        try:
+            address = external_api.get_address_from_coordinates(*coords) if coords else "No GPS"
+            post_detection_record(
+                DetectionRecordDto(
+                    result,
+                    coords if coords else (0, 0),
+                    address,
+                    gps_manager.get_local_time(coords)
+                )
+            )
+        except Exception as e:
+            print("[Worker error]", e)
+        detection_queue.task_done()
 
 def post_detection_record(detection_record: DetectionRecordDto):
-    if login_info is None:
-        login(LoginInfo())
-
     headers = {
         "Content-Type": "application/json",
-        "Authorization": f"Bearer {login_info.access_token}"
+        "x-api-key": API_KEY
     }
 
-    data = json.dumps(detection_record.to_dict())
+    data = detection_record.to_dict()
 
-    response = requests.post(url=API_ENDPOINT + "Litter", data=data, headers=headers)
+    response = requests.post(url=API_ENDPOINT + "/litters", json=data, headers=headers)
 
     if response.status_code == 200:
         print("Success:", response.json())
     else:
         print("Error:", response.status_code, response.text)
+
+threading.Thread(target=detection_worker, daemon=True).start()
