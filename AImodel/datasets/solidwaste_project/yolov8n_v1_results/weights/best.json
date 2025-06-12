@@ -1,0 +1,41 @@
+{
+    "model": {
+        "xml": "best.xml",
+        "bin": "best.bin"
+    },
+    "nn_config": {
+        "output_format": "detection",
+        "NN_family": "YOLO",
+        "input_size": "416x416",
+        "NN_specific_metadata": {
+            "classes": 17,
+            "coordinates": 4,
+            "anchors": [],
+            "anchor_masks": {},
+            "iou_threshold": 0.5,
+            "confidence_threshold": 0.5
+        }
+    },
+    "mappings": {
+        "labels": [
+            "Cans",
+            "Cardboard",
+            "Colored Glass Bottles",
+            "Face Mask",
+            "Glass Bottle",
+            "HDPE",
+            "LDPE",
+            "PET",
+            "PVC",
+            "Paper Bag",
+            "Paper Cup",
+            "Paperboard",
+            "Peel",
+            "Pile of Leaves",
+            "Rags",
+            "Styrofoam",
+            "Tetra Pak"
+        ]
+    },
+    "version": 1
+}

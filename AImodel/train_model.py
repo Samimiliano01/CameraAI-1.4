@@ -14,8 +14,8 @@ def train_model():
         raise ValueError("Zet je ROBOFLOW_API_KEY als omgevingsvariabele!")
 
     rf = Roboflow(api_key=API_KEY)
-    workspace = rf.workspace("vape-0gytc")
-    project = workspace.project("solidwaste-detection")
+    workspace = rf.workspace("test-mncux")
+    project = workspace.project("litter_dataset-2vtbq")
 
     print("Beschikbare datasetversies:")
     for v in project.versions():
