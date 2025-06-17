@@ -65,7 +65,6 @@ def get_gps_coordinates():
         raw_data, parsed_data = ubr.read()
         if parsed_data is not None:
           payload = parsed_data.payload
-          print(payload)
           if len(payload) < 6:
             print("Couldn't get location!")
             gps_data.unset()
