@@ -3,6 +3,22 @@ from roboflow import Roboflow
 from ultralytics import YOLO
 
 def train_model():
+    """
+    Train a YOLOv8 model for a specific dataset by downloading the latest dataset version,
+    training the model using specified settings, and exporting the trained model.
+
+    The function performs the following steps:
+    - Sets the working directory for the dataset.
+    - Retrieves the Roboflow API key from environment variables.
+    - Downloads the latest version of the dataset from Roboflow.
+    - Trains a YOLOv8 model using the downloaded dataset.
+    - Validates the trained model.
+    - Exports the trained model in ONNX format upon successful training.
+
+    :raises ValueError: If the Roboflow API key is not set as an environment variable.
+
+    :return: None
+    """
     # Zet werkdirectory
     HOME = os.getcwd()
     DATASET_DIR = os.path.join(HOME, "datasets")
