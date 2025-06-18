@@ -8,6 +8,20 @@ from imutils.video import FPS
 import time
 
 def main():
+    """
+    Main function to initialize and run DepthAI camera pipeline for real-time
+    inference using YOLOv8. Processes video frames and detections, annotates
+    frames with results, calculates FPS, and optionally sends detection data to
+    an API. The function uses a video writer to output the processed video and
+    allows exiting via the 'q' key.
+
+    :raises RuntimeError: If there are issues initializing or starting the DepthAI
+        device.
+    :raises ValueError: When the detections or GPS data do not conform to expected
+        conditions.
+
+    :return: None
+    """
     # initialize a depthai camera pipeline
     print("[INFO] initializing a depthai images pipeline...")
 
